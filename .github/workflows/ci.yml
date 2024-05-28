@@ -1,67 +1,65 @@
 name: Continuous Integration
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
-  linting:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    linting:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
 
-    steps:
-      - name: Checkout current commit
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout current commit
+              uses: actions/checkout@v4
 
-      - name: Use pnpm
-        uses: pnpm/action-setup@v4.0.0
-        with:
-          version: latest
-          run_install: false
+            - name: Use pnpm
+              uses: pnpm/action-setup@v4.0.0
+              with:
+                  run_install: false
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: "pnpm"
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: Lint files (JS/TS & CSS)
-        run: pnpm lint
+            - name: Lint files (JS/TS & CSS)
+              run: pnpm lint
 
-  typecheck:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    typecheck:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
 
-    steps:
-      - name: Checkout current commit
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout current commit
+              uses: actions/checkout@v4
 
-      - name: Use pnpm
-        uses: pnpm/action-setup@v4.0.0
-        with:
-          version: latest
-          run_install: false
+            - name: Use pnpm
+              uses: pnpm/action-setup@v4.0.0
+              with:
+                  run_install: false
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: "pnpm"
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: Typecheck files
-        run: pnpm typecheck
+            - name: Typecheck files
+              run: pnpm typecheck
