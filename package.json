@@ -1,20 +1,18 @@
 {
-  "name": "root",
-  "private": true,
-  "type": "module",
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=8.0.0",
-    "npm": "<=0"
-  },
-  "scripts": {
-    "lint": "pnpm --stream --filter {examples/**} lint",
-    "lint:fix": "pnpm --stream --filter {examples/**} lint:fix",
-    "prettier": "pnpm --stream --filter {examples/**} prettier",
-    "prettier:fix": "pnpm --stream --filter {examples/**} prettier:fix",
-    "upgrade:all": "pnpm --stream --filter {examples/**} upgrade",
-    "typecheck": "pnpm --stream --filter {examples/**} typecheck",
-    "ci": "pnpm install --frozen-lockfile"
-  },
-  "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
+    "name": "root",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "lint": "pnpm --stream --filter {examples/**} lint",
+        "lint:fix": "pnpm --stream --filter {examples/**} lint:fix",
+        "prettier": "pnpm --stream --filter {examples/**} prettier",
+        "prettier:fix": "pnpm --stream --filter {examples/**} prettier:fix",
+        "upgrade:all": "pnpm --stream --filter {examples/**} upgrade",
+        "typecheck": "pnpm --stream --filter {examples/**} typecheck",
+        "ci": "pnpm install --frozen-lockfile"
+    },
+    "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
 }
