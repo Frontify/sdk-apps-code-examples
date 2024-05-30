@@ -9,7 +9,6 @@ import { defineSettings } from '@frontify/platform-app';
  * https://developer.frontify.com/document/2258#/getting-started/app-development-1/app-settings
  */
 
-
 /**
  * Section title: In this example, 'example1' will be the accordion header
  * for your settings in the marketplace. Within this section, we define
