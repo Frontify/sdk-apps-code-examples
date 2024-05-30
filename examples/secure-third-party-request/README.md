@@ -13,7 +13,7 @@ For more details on how to customize and extend this app, please refer to the [d
 ### Requirements:
 
 -   Node 20
--   Access to a Frontify guideline.
+-   Access to a Frontify Instance.
 
 ### Setup
 1. Install the dependencies
