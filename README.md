@@ -6,6 +6,7 @@ Welcome to the Brand SDK Apps Code Samples repository! Here, you'll find a serie
 
 -   **Hello World App**: A basic introduction to our SDK. This app is pre-configured with our platform fonts, design system components, and styles.
 -   **Secure Third-Party Request**: A sample app that demonstrates how to securely request third-party services using our SDK.
+-   **App with user state example**: A sample app that demonstrates how to use the userState.
 
 Each example is accompanied by detailed documentation and comments within the code to help you understand how to utilize our SDK effectively. Whether you're just getting started or looking to implement specific features, these samples will guide you through the process.
 

@@ -1,4 +1,4 @@
-# Hello World
+# App with user state example
 This is a simple example of a Hello World app using React and Tailwind.
 
 ## Information
