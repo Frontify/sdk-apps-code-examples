@@ -1,0 +1,14 @@
+@import url(assets/css/fonts.css);
+
+* {
+    margin: 0;
+}
+
+#root {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+}
