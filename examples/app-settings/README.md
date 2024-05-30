@@ -1,5 +1,5 @@
 # App Settings Example
-This is a simple example of a Hello World app using React and Tailwind.
+This is a simple example of a Hello World app using React,Tailwind and app settings.
 
 ## Information
 
