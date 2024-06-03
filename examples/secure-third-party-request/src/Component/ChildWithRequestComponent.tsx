@@ -15,8 +15,8 @@ export const ChildWithRequestComponent = () => {
      */
     const onPress = async () => {
         const output = await appBridge?.api({
-            name: 'getSecretRequest',
-            payload: { id: 'body-endpoint-id', requestParams: { title: 'title' } },
+            name: 'getSecureRequest',
+            payload: { endpoint: 'body-endpoint-id', requestParams: { title: 'title' } },
         });
         if (!output) {
             return;
