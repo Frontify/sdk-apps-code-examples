@@ -11,6 +11,6 @@ Welcome to the Brand SDK Apps Code Samples repository! Here, you'll find a serie
 
 Each example is accompanied by detailed documentation and comments within the code to help you understand how to utilize our SDK effectively. Whether you're just getting started or looking to implement specific features, these samples will guide you through the process.
 
-For detailed instructions and further information, please refer to the [documentation](https://developer.frontify.com/).
+For detailed instructions and further information, please refer to the [documentation](https://developer.frontify.com/){:target="_blank"}.
 
 We hope these examples help you build amazing applications with our SDK!
