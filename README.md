@@ -4,10 +4,10 @@ Welcome to the Brand SDK Apps Code Samples repository! Here, you'll find a serie
 
 ## What You'll Find Here
 
--   [**Hello World App**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/hello-world): A basic introduction to our SDK. This app is pre-configured with our platform fonts, design system components, and styles.
--   [**Secure Third-Party Request**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/secure-third-party-request): A sample app that demonstrates how to securely request third-party services using our SDK.
--   [**App with user state example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-with-state): A sample app that demonstrates how to use the userState.
--   [**App Settings Example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-settings): A simple example of a Hello World app using `settings.ts` to customize app behavior.
+-   [**Hello World App**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/hello-world){:target="_blank"} : A basic introduction to our SDK. This app is pre-configured with our platform fonts, design system components, and styles.
+-   [**Secure Third-Party Request**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/secure-third-party-request){:target="_blank"}: A sample app that demonstrates how to securely request third-party services using our SDK.
+-   [**App with user state example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-with-state){:target="_blank"}: A sample app that demonstrates how to use the userState.
+-   [**App Settings Example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-settings){:target="_blank"}: A simple example of a Hello World app using `settings.ts` to customize app behavior.
 
 Each example is accompanied by detailed documentation and comments within the code to help you understand how to utilize our SDK effectively. Whether you're just getting started or looking to implement specific features, these samples will guide you through the process.
 
