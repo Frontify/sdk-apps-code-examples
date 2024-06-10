@@ -16,16 +16,13 @@ export const ChildWithRequestComponent = () => {
     const onPress = async () => {
         const output = await appBridge?.api({
             name: 'getSecureRequest',
-            payload: { endpoint: 'body-endpoint-id', requestParams: { title: 'title' } },
+            payload: { endpoint: 'body-endpoint-get', requestParams: { title: 'title', page: 1, segment: 'posts' } },
         });
+
         if (!output) {
             return;
         }
-
-        const { data } = output as { data: { body: string; title: string } };
-        const { body, title } = data;
-
-        console.log(body, title);
+        console.log('output', output);
     };
 
     return <Button onPress={onPress}>Call the Secure Request</Button>;

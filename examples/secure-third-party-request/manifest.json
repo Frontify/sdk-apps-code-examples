@@ -33,6 +33,16 @@
                         "body": "%%THIRD_PARTY_API_KEY%%"
                     }
                 }
+            },
+            {
+                "name": "body-endpoint-get",
+                "resource": "https://jsonplaceholder.typicode.com/$$segment$$/%%THIRD_PARTY_API_KEY%%",
+                "options": {
+                    "headers": {
+                        "Content-type": "application/json"
+                    },
+                    "method": "GET"
+                }
             }
         ]
     }
