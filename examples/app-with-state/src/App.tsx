@@ -1,43 +1,34 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+import { AppBridgePlatformApp } from '@frontify/app-bridge';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button, TextInput } from '@frontify/fondue/components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const App = () => {
-    const appBridge = usePlatformAppBridge();
-    const [context, setContext] = useState<PlatformAppContext>();
+    const appBridge = new AppBridgePlatformApp();
     const [input, setInput] = useState('');
     const [userState, setUserState] = useState<Record<string, string>>();
     const [subscribedState, setSubscribedState] = useState<Record<string, string>>();
 
-    useEffect(() => {
-        if (!appBridge) {
-            return;
-        }
-
-        setContext(appBridge.context().get());
-    }, [appBridge]);
-
     const setState = () => {
         // Access the state of an individual user
         // This state persist for deployed Apps
-        appBridge?.state('userState').set({ 'test-app': input });
+        appBridge.state('userState').set({ 'test-app': input });
     };
 
     const getState = () => {
         // Access  the current userState
         // This state persist if the app is deployed
-        const appBridgeState = appBridge?.state('userState').get() as Record<string, string>;
+        const appBridgeState = appBridge.state('userState').get() as Record<string, string>;
         setUserState(appBridgeState);
     };
 
     const subscribeState = () => {
         // Subscribe to a userState Change
         // The callback is trigger when a new userState is set
-        appBridge?.state('userState').subscribe((nextState, previousState) => {
+        appBridge.state('userState').subscribe((nextState, previousState) => {
             console.log('access to previous State', previousState);
             const subState = nextState as { settings: Record<string, string>; userState: Record<string, string> };
             setSubscribedState(subState.userState);
@@ -57,7 +48,7 @@ export const App = () => {
                 <p className="tw-text-text">
                     Congratulations! You have successfully connected your app to our platform.
                 </p>
-                {context && <p className="tw-text-text-weak tw-text-body-small">Surface: {context.surface}</p>}
+                <p className="tw-text-text-weak tw-text-body-small">Surface: {appBridge.context().get().surface}</p>
             </Flex>
 
             <Flex>
