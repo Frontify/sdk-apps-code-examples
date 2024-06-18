@@ -1,31 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+import { AppBridgePlatformApp } from '@frontify/app-bridge';
 import { Flex, Heading } from '@frontify/fondue';
-import { useEffect, useState } from 'react';
 
 import { ChildWithRequestComponent } from './Component/ChildWithRequestComponent.tsx';
 
 export const App = () => {
     /**
      * The App-Bridge package is included as a dependency by default.
-     * In this example, we are retrieving the context from the platform
-     * using the PlatformAppBridge hook.
+     * In this example, we are retrieving the context from the App
      *
-     * There are more hooks and utilities available that you can use.
      * For more information, please refer to our documentation.
      */
-    const appBridge = usePlatformAppBridge();
-    const [context, setContext] = useState<PlatformAppContext>();
-
-    useEffect(() => {
-        if (!appBridge) {
-            return;
-        }
-
-        setContext(appBridge.context().get());
-    }, [appBridge]);
+    const appBridge = new AppBridgePlatformApp();
 
     /**
      * We recommend building your apps using our Design System, Fondue.
@@ -39,7 +27,9 @@ export const App = () => {
             </Heading>
             <Flex direction="column">
                 <p>Congratulations! You have successfully connected your app to our platform.</p>
-                <p className="tw-text-text-weak tw-text-body-small">[Surface] Your entrypoint is: {context?.surface}</p>
+                <p className="tw-text-text-weak tw-text-body-small">
+                    [Surface] Your entrypoint is: {appBridge.context().get().surface}
+                </p>
             </Flex>
 
             <Flex direction="column">
