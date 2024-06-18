@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+import { AppBridgePlatformApp } from '@frontify/app-bridge';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
-import { useEffect, useState } from 'react';
 
 export const App = () => {
     /**
@@ -14,16 +13,7 @@ export const App = () => {
      * There are more hooks and utilities available that you can use.
      * For more information, please refer to our documentation.
      */
-    const appBridge = usePlatformAppBridge();
-    const [context, setContext] = useState<PlatformAppContext>();
-
-    useEffect(() => {
-        if (!appBridge) {
-            return;
-        }
-
-        setContext(appBridge.context().get());
-    }, [appBridge]);
+    const appBridge = new AppBridgePlatformApp();
 
     /**
      * We recommend building your apps using our Design System, Fondue.
@@ -39,7 +29,7 @@ export const App = () => {
                 <p className="tw-text-text">
                     Congratulations! You have successfully connected your app to our platform.
                 </p>
-                {context && <p className="tw-text-text-weak tw-text-body-small">Surface: {context.surface}</p>}
+                <p className="tw-text-text-weak tw-text-body-small">Surface: {appBridge.context().get().surface}</p>
             </Flex>
 
             <a

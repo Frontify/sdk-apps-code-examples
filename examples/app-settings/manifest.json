@@ -10,7 +10,7 @@
             "assetAction": {
                 "title": "Asset Action",
                 "type": ["image"],
-                "filenameExtension": ["png", "jpeg"]
+                "filenameExtension": ["png", "jpeg", "jpg"]
             },
             "assetCreation": {
                 "title": "Asset Creation"
