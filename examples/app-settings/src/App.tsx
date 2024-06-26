@@ -24,8 +24,8 @@ export const App = () => {
     const logSettings = () => {
         const settings = appBridge.state('settings').get() as Record<string, string>;
 
-        console.log('full settings Object', settings);
-        console.log('single-line, field', settings['single-line']);
+        console.log('Full settings object', settings);
+        console.log('Single-line, field', settings['single-line']);
     };
 
     return (
