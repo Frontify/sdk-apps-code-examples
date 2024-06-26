@@ -3,12 +3,12 @@
 import './App.css';
 import { AppBridgePlatformApp } from '@frontify/app-bridge';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
+import { Button } from '@frontify/fondue/components';
 
 export const App = () => {
     /**
      * The App-Bridge package is included as a dependency by default.
-     * In this example, we are retrieving the context from the platform
-     * using the PlatformAppBridge hook.
+     * In this example, we are retrieving the context from the platform.
      *
      * There are more hooks and utilities available that you can use.
      * For more information, please refer to our documentation.
@@ -20,6 +20,14 @@ export const App = () => {
      * fondue-tokens are often used for styling.
      * All the Tailwind classes derived from our tokens have the 'tw-' prefix.
      */
+
+    const logSettings = () => {
+        const settings = appBridge.state('settings').get() as Record<string, string>;
+
+        console.log('full settings Object', settings);
+        console.log('single-line, field', settings['single-line']);
+    };
+
     return (
         <div className="tw-font-body tw-h-screen tw-bg-base tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-y-6">
             <Heading size="xx-large" weight="strong">
@@ -45,6 +53,10 @@ export const App = () => {
                 <IconArrowOutExternal20 />
                 <span>Documentation</span>
             </a>
+
+            <Flex>
+                <Button onPress={() => logSettings()}>Get Settings</Button>
+            </Flex>
         </div>
     );
 };

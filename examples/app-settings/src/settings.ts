@@ -23,12 +23,10 @@ export const settings = defineSettings({
             type: 'input',
             id: 'single-line',
             label: 'Input field',
-            defaultValue: 'Input Field Value',
         },
         {
             id: 'main-dropdown',
             type: 'dropdown',
-            defaultValue: 'option1',
             size: 'large',
             disabled: true,
             choices: [
@@ -48,15 +46,6 @@ export const settings = defineSettings({
         },
     ],
     example2: [
-        {
-            type: 'input',
-            id: 'input-password',
-            inputType: 'password',
-            label: 'Your password',
-            defaultValue: 'AnyPassword',
-        },
-    ],
-    example3: [
         {
             id: 'checklist-1',
             type: 'sectionHeading', // This will create a section heading within the accordion content
