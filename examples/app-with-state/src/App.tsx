@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp, appContext, appUserState } from '@frontify/app-bridge-app';
+import { AppBridgePlatformApp, appContext } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button, TextInput } from '@frontify/fondue/components';
 import { useState } from 'react';
