@@ -1,13 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp } from '@frontify/app-bridge';
+import { AppBridgePlatformApp, appContext, appUserState } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button, TextInput } from '@frontify/fondue/components';
 import { useState } from 'react';
 
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
+    const context = appContext();
     const [input, setInput] = useState('');
     const [userState, setUserState] = useState<Record<string, string>>();
     const [subscribedState, setSubscribedState] = useState<Record<string, string>>();
@@ -48,7 +49,7 @@ export const App = () => {
                 <p className="tw-text-text">
                     Congratulations! You have successfully connected your app to our platform.
                 </p>
-                <p className="tw-text-text-weak tw-text-body-small">Surface: {appBridge.context().get().surface}</p>
+                <p className="tw-text-text-weak tw-text-body-small">Surface: {context.surface}</p>
             </Flex>
 
             <Flex>

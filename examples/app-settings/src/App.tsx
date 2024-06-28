@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp } from '@frontify/app-bridge';
+import { AppBridgePlatformApp, appSettings } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button } from '@frontify/fondue/components';
 
@@ -22,7 +22,7 @@ export const App = () => {
      */
 
     const logSettings = () => {
-        const settings = appBridge.state('settings').get() as Record<string, string>;
+        const [settings] = appSettings<{ 'single-line': string }>();
 
         console.log('Full settings object', settings);
         console.log('Single-line, field', settings['single-line']);

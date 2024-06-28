@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp } from '@frontify/app-bridge';
+import { appContext } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 
 export const App = () => {
@@ -11,7 +11,7 @@ export const App = () => {
      *
      * For more information, please refer to our documentation.
      */
-    const appBridge = new AppBridgePlatformApp();
+    const context = appContext();
 
     /**
      * We recommend building your apps using our Design System, Fondue.
@@ -27,7 +27,7 @@ export const App = () => {
                 <p className="tw-text-text">
                     Congratulations! You have successfully connected your app to our platform.
                 </p>
-                <p className="tw-text-text-weak tw-text-body-small">Surface: {appBridge.context().get().surface}</p>
+                <p className="tw-text-text-weak tw-text-body-small">Surface: {context.surface}</p>
             </Flex>
 
             <a

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgePlatformApp } from '@frontify/app-bridge';
+import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import { Button } from '@frontify/fondue/components';
 
 export const ChildWithRequestComponent = () => {

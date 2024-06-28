@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp } from '@frontify/app-bridge';
+import { appContext } from '@frontify/app-bridge-app';
 import { Flex, Heading } from '@frontify/fondue';
 
 import { ChildWithRequestComponent } from './Component/ChildWithRequestComponent.tsx';
@@ -13,8 +13,7 @@ export const App = () => {
      *
      * For more information, please refer to our documentation.
      */
-    const appBridge = new AppBridgePlatformApp();
-
+    const context = appContext();
     /**
      * We recommend building your apps using our Design System, Fondue.
      * fondue-tokens are often used for styling.
@@ -27,9 +26,7 @@ export const App = () => {
             </Heading>
             <Flex direction="column">
                 <p>Congratulations! You have successfully connected your app to our platform.</p>
-                <p className="tw-text-text-weak tw-text-body-small">
-                    [Surface] Your entrypoint is: {appBridge.context().get().surface}
-                </p>
+                <p className="tw-text-text-weak tw-text-body-small">[Surface] Your entrypoint is: {context.surface}</p>
             </Flex>
 
             <Flex direction="column">
