@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import { AppBridgePlatformApp, appContext } from '@frontify/app-bridge-app';
+import { AppBridgePlatformApp, appContext, appUserState } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button, TextInput } from '@frontify/fondue/components';
 import { useState } from 'react';
@@ -13,26 +13,25 @@ export const App = () => {
     const [userState, setUserState] = useState<Record<string, string>>();
     const [subscribedState, setSubscribedState] = useState<Record<string, string>>();
 
+    const [userStateApp, setUserStateApp] = appUserState<{ 'test-app': string }>();
+
     const setState = () => {
         // Access the state of an individual user
-        // This state persist for deployed Apps
-        appBridge.state('userState').set({ 'test-app': input });
+        setUserStateApp({ 'test-app': input });
     };
 
     const getState = () => {
         // Access  the current userState
-        // This state persist if the app is deployed
-        const appBridgeState = appBridge.state('userState').get() as Record<string, string>;
-        setUserState(appBridgeState);
+        setUserState(userStateApp);
     };
 
     const subscribeState = () => {
         // Subscribe to a userState Change
         // The callback is trigger when a new userState is set
-        appBridge.state('userState').subscribe((nextState, previousState) => {
-            console.log('access to previous State', previousState);
-            const subState = nextState as { settings: Record<string, string>; userState: Record<string, string> };
-            setSubscribedState(subState.userState);
+        appBridge.state('userState').subscribe((nextState: Record<string, string>, previousState: Record<string, string>) => {
+            console.log('previous State', previousState)
+            console.log('next State', nextState)
+            setSubscribedState(nextState);
         });
     };
 
@@ -52,7 +51,7 @@ export const App = () => {
                 <p className="tw-text-text-weak tw-text-body-small">Surface: {context.surface}</p>
             </Flex>
 
-            <Flex>
+            <Flex alignContent={'start'} justify={'start'}>
                 <p className="tw-text-text">Lets use our State:</p>
                 <TextInput id={'id'} onChange={(e) => onInput(e.target.value)} value={input} />
                 <Button onPress={() => setState()}>Set State</Button>
