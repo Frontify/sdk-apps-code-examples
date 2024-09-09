@@ -5,6 +5,7 @@ module.exports = {
             version: 'detect',
         },
     },
+    ignorePatterns: ['**/*.md'],
     parserOptions: {
         project: ['./tsconfig.json', './tsconfig.node.json'],
         tsconfigRootDir: __dirname,
