@@ -5,7 +5,7 @@
     "metadata": {
         "version": 1
     },
-    "permission": {
+    "permissions": {
         "scopes": ["basic:read", "basic:write"]
     },
     "surfaces": {
