@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './App.css';
-import {AppBridgePlatformApp, appContext, appSettings} from '@frontify/app-bridge-app';
+import { appContext, appSettings } from '@frontify/app-bridge-app';
 import { Flex, FOCUS_VISIBLE_STYLE, Heading, IconArrowOutExternal20, merge } from '@frontify/fondue';
 import { Button } from '@frontify/fondue/components';
 
@@ -13,7 +13,6 @@ export const App = () => {
      * There are more hooks and utilities available that you can use.
      * For more information, please refer to our documentation.
      */
-    const appBridge = new AppBridgePlatformApp();
     const context = appContext();
 
     /**
