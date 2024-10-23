@@ -8,23 +8,23 @@ export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
 
-    const [images, setImages] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
+    const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
 
     useEffect(() => {
-        const fetchImages = async () => {
+        const fetchAssets = async () => {
             if (context.surface !== 'assetBulkActions') {
                 return;
             }
 
-            const endpointImages = await appBridge.api({
+            const response = await appBridge.api({
                 name: 'executeGraphQl',
                 payload: { query: getAssetsByIds(context.selection.assets.ids) },
             });
-            console.log(endpointImages);
-            setImages(endpointImages.assets);
+
+            setAssets(response.assets);
         };
 
-        fetchImages();
+        fetchAssets();
     }, []);
 
     return (
@@ -61,11 +61,11 @@ export const App = () => {
                 </div>
             </div>
             <div id="file-list">
-                {images.length > 0 &&
-                    images.map((image) => (
+                {assets.length > 0 &&
+                    assets.map((asset) => (
                         <p id="results">
-                            <span className="tw-text-text">{image.title}</span>
-                            <span className="tw-text-text-weak">.{image.extension}</span>
+                            <span className="tw-text-text">{asset.title}</span>
+                            <span className="tw-text-text-weak">.{asset.extension}</span>
                         </p>
                     ))}
             </div>
