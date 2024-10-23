@@ -30,7 +30,7 @@ export const App = () => {
     return (
         <div className="tw-flex tw-flex-col tw-py-10 tw-px-10 tw-gap-y-6">
             <Heading size="xx-large" weight="strong">
-                Bulk Rename Files
+                Bulk Rename Assets
             </Heading>
             <div className="tw-flex tw-flex-col tw-gap-y-2">
                 <div className="tw-flex tw-items-center tw-gap-x-2">
