@@ -2,7 +2,7 @@ import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import { useEffect, useState } from 'react';
 import { getAssetsByIds } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
-import { Heading, Text, TextInput } from '@frontify/fondue';
+import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
 
 const highlightMatches = (filename: string, query: string) => {
     if (!query) {
@@ -15,7 +15,7 @@ const highlightMatches = (filename: string, query: string) => {
 
     const highlightedText = parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-            <span key={index} className="tw-bg-red-60">
+            <span key={index} className="tw-bg-box-negative-strong">
                 {part}
             </span>
         ) : (
@@ -28,10 +28,10 @@ const highlightMatches = (filename: string, query: string) => {
 
 const getResultCount = (count: number) => {
     if (count === 0) {
-        return 'No results';
+        return 'No matches';
     }
 
-    return `${count} result${count === 1 ? '' : 's'}`;
+    return `${count} match${count === 1 ? '' : 'es'}`;
 };
 
 export const App = () => {
@@ -40,6 +40,7 @@ export const App = () => {
 
     const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
     const [findText, setFindText] = useState('');
+    const [replaceText, setReplaceText] = useState('');
     const [matchCount, setMatchCount] = useState(0);
 
     const assetsAreFetched = assets.length > 0;
@@ -70,6 +71,10 @@ export const App = () => {
         setMatchCount(totalMatchCount);
     }, [findText, assets]);
 
+    const renameAssets = () => {
+        console.log('about to rename...');
+    };
+
     return (
         <div className="tw-flex tw-flex-col tw-py-10 tw-px-10 tw-gap-y-6">
             <Heading size="xx-large" weight="strong">
@@ -86,19 +91,19 @@ export const App = () => {
                         onEnterPressed={() => {}}
                         onBlur={() => {}}
                     />
-                    <div className="tw-text-text-weak">{getResultCount(matchCount)}</div>
+                    <Text>{getResultCount(matchCount)}</Text>
                 </div>
                 <div className="tw-flex tw-gap-x-1">
                     <TextInput
                         id="replace"
                         placeholder="Replace"
                         disabled={!assetsAreFetched}
-                        value={''}
-                        onChange={() => {}}
+                        value={replaceText}
+                        onChange={setReplaceText}
                         onEnterPressed={() => {}}
                         onBlur={() => {}}
                     />
-                    <Button disabled={true} onPress={() => {}}>
+                    <Button disabled={matchCount === 0} onPress={renameAssets}>
                         Rename all
                     </Button>
                 </div>
@@ -109,10 +114,12 @@ export const App = () => {
                         const { highlightedText } = highlightMatches(asset.title, findText);
 
                         return (
-                            <p key={index}>
-                                <span className="tw-text-text">{highlightedText}</span>
-                                <span className="tw-text-text-weak">.{asset.extension}</span>
-                            </p>
+                            <Stack direction="row" marginY={4} key={index}>
+                                <Text size="medium">
+                                    <span className="tw-text-text">{highlightedText}</span>
+                                    <span className="tw-text-text-weak">.{asset.extension}</span>
+                                </Text>
+                            </Stack>
                         );
                     })
                 ) : (
