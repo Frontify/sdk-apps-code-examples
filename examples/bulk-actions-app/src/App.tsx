@@ -1,13 +1,12 @@
 import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import { useEffect, useState } from 'react';
-import { getAssetIds } from './helpers/graphql';
+import { getAssetsByIds } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
 import { Heading, TextInput } from '@frontify/fondue';
 
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
-    const query = getAssetIds(context.selection.assets.ids);
 
     const [images, setImages] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
 
@@ -19,7 +18,7 @@ export const App = () => {
 
             const endpointImages = await appBridge.api({
                 name: 'executeGraphQl',
-                payload: { query },
+                payload: { query: getAssetsByIds(context.selection.assets.ids) },
             });
             console.log(endpointImages);
             setImages(endpointImages.assets);
@@ -38,6 +37,7 @@ export const App = () => {
                     <TextInput
                         id="find"
                         placeholder="Find"
+                        disabled={true}
                         value={''}
                         onChange={() => {}}
                         onEnterPressed={() => {}}
@@ -49,6 +49,7 @@ export const App = () => {
                     <TextInput
                         id="replace"
                         placeholder="Replace"
+                        disabled={true}
                         value={''}
                         onChange={() => {}}
                         onEnterPressed={() => {}}
