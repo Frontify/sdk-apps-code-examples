@@ -4,11 +4,30 @@ import { getAssetsByIds } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
 import { Heading, Text, TextInput } from '@frontify/fondue';
 
+const highlightMatches = (filename: string, query: string) => {
+    if (!query) {
+        return filename;
+    }
+
+    const parts = filename.split(new RegExp(`(${query})`, 'gi'));
+
+    return parts.map((part, index) =>
+        part.toLowerCase() === query.toLowerCase() ? (
+            <span key={index} className="tw-bg-red-60">
+                {part}
+            </span>
+        ) : (
+            part
+        ),
+    );
+};
+
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
 
     const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
+    const [findText, setFindText] = useState('');
 
     const assetsAreFetched = assets.length > 0;
 
@@ -40,8 +59,8 @@ export const App = () => {
                         id="find"
                         placeholder="Find"
                         disabled={!assetsAreFetched}
-                        value={''}
-                        onChange={() => {}}
+                        value={findText}
+                        onChange={setFindText}
                         onEnterPressed={() => {}}
                         onBlur={() => {}}
                     />
@@ -64,9 +83,9 @@ export const App = () => {
             </div>
             <div id="file-list">
                 {assetsAreFetched ? (
-                    assets.map((asset) => (
-                        <p id="results">
-                            <span className="tw-text-text">{asset.title}</span>
+                    assets.map((asset, index) => (
+                        <p key={index}>
+                            <span className="tw-text-text">{highlightMatches(asset.title, findText)}</span>
                             <span className="tw-text-text-weak">.{asset.extension}</span>
                         </p>
                     ))
