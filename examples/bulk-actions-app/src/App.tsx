@@ -6,12 +6,14 @@ import { Heading, Text, TextInput } from '@frontify/fondue';
 
 const highlightMatches = (filename: string, query: string) => {
     if (!query) {
-        return filename;
+        return { highlightedText: filename, matchCount: 0 };
     }
 
     const parts = filename.split(new RegExp(`(${query})`, 'gi'));
 
-    return parts.map((part, index) =>
+    const matchCount = parts.filter((part) => part.toLowerCase() === query.toLowerCase()).length;
+
+    const highlightedText = parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
             <span key={index} className="tw-bg-red-60">
                 {part}
@@ -20,6 +22,16 @@ const highlightMatches = (filename: string, query: string) => {
             part
         ),
     );
+
+    return { highlightedText, matchCount };
+};
+
+const getResultCount = (count: number) => {
+    if (count === 0) {
+        return 'No results';
+    }
+
+    return `${count} result${count === 1 ? '' : 's'}`;
 };
 
 export const App = () => {
@@ -28,6 +40,7 @@ export const App = () => {
 
     const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
     const [findText, setFindText] = useState('');
+    const [matchCount, setMatchCount] = useState(0);
 
     const assetsAreFetched = assets.length > 0;
 
@@ -48,6 +61,15 @@ export const App = () => {
         fetchAssets();
     }, []);
 
+    useEffect(() => {
+        let totalMatchCount = 0;
+        assets.forEach((asset) => {
+            const { matchCount } = highlightMatches(asset.title, findText);
+            totalMatchCount += matchCount;
+        });
+        setMatchCount(totalMatchCount);
+    }, [findText, assets]);
+
     return (
         <div className="tw-flex tw-flex-col tw-py-10 tw-px-10 tw-gap-y-6">
             <Heading size="xx-large" weight="strong">
@@ -64,7 +86,7 @@ export const App = () => {
                         onEnterPressed={() => {}}
                         onBlur={() => {}}
                     />
-                    <div className="tw-text-text-weak">No matches</div>
+                    <div className="tw-text-text-weak">{getResultCount(matchCount)}</div>
                 </div>
                 <div className="tw-flex tw-gap-x-1">
                     <TextInput
@@ -83,12 +105,16 @@ export const App = () => {
             </div>
             <div id="file-list">
                 {assetsAreFetched ? (
-                    assets.map((asset, index) => (
-                        <p key={index}>
-                            <span className="tw-text-text">{highlightMatches(asset.title, findText)}</span>
-                            <span className="tw-text-text-weak">.{asset.extension}</span>
-                        </p>
-                    ))
+                    assets.map((asset, index) => {
+                        const { highlightedText } = highlightMatches(asset.title, findText);
+
+                        return (
+                            <p key={index}>
+                                <span className="tw-text-text">{highlightedText}</span>
+                                <span className="tw-text-text-weak">.{asset.extension}</span>
+                            </p>
+                        );
+                    })
                 ) : (
                     <Text size="large" as="em">
                         Gathering filenames of selected assets ...
