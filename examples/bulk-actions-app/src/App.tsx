@@ -2,13 +2,15 @@ import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import { useEffect, useState } from 'react';
 import { getAssetsByIds } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
-import { Heading, TextInput } from '@frontify/fondue';
+import { Heading, Text, TextInput } from '@frontify/fondue';
 
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
 
     const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
+
+    const assetsAreFetched = assets.length > 0;
 
     useEffect(() => {
         const fetchAssets = async () => {
@@ -37,7 +39,7 @@ export const App = () => {
                     <TextInput
                         id="find"
                         placeholder="Find"
-                        disabled={true}
+                        disabled={!assetsAreFetched}
                         value={''}
                         onChange={() => {}}
                         onEnterPressed={() => {}}
@@ -49,7 +51,7 @@ export const App = () => {
                     <TextInput
                         id="replace"
                         placeholder="Replace"
-                        disabled={true}
+                        disabled={!assetsAreFetched}
                         value={''}
                         onChange={() => {}}
                         onEnterPressed={() => {}}
@@ -61,13 +63,18 @@ export const App = () => {
                 </div>
             </div>
             <div id="file-list">
-                {assets.length > 0 &&
+                {assetsAreFetched ? (
                     assets.map((asset) => (
                         <p id="results">
                             <span className="tw-text-text">{asset.title}</span>
                             <span className="tw-text-text-weak">.{asset.extension}</span>
                         </p>
-                    ))}
+                    ))
+                ) : (
+                    <Text size="large" as="em">
+                        Gathering filenames of selected assets ...
+                    </Text>
+                )}
             </div>
         </div>
     );
