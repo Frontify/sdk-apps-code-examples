@@ -7,18 +7,22 @@ import { Heading, TextInput } from '@frontify/fondue';
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
+    const query = getAssetIds(context.selection.assets.ids);
+
     const [images, setImages] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
 
     useEffect(() => {
         const fetchImages = async () => {
-            if (context.surface === 'assetBulkActions') {
-                const endpointImages = await appBridge.api({
-                    name: 'executeGraphQl',
-                    payload: { query: getAssetIds(context.selection.assets.ids) },
-                });
-                console.log(endpointImages);
-                setImages(endpointImages.assets);
+            if (context.surface !== 'assetBulkActions') {
+                return;
             }
+
+            const endpointImages = await appBridge.api({
+                name: 'executeGraphQl',
+                payload: { query },
+            });
+            console.log(endpointImages);
+            setImages(endpointImages.assets);
         };
 
         fetchImages();
