@@ -38,12 +38,16 @@ export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
 
-    const [assets, setAssets] = useState<{ previewUrl: string; title: string; extension: string }[]>([]);
+    const [assets, setAssets] = useState<{ id: string; previewUrl: string; title: string; extension: string }[]>([]);
     const [findText, setFindText] = useState('');
     const [replaceText, setReplaceText] = useState('');
     const [matchCount, setMatchCount] = useState(0);
 
     const assetsAreFetched = assets.length > 0;
+
+    const renameAssets = () => {
+        console.log('about to rename...');
+    };
 
     useEffect(() => {
         const fetchAssets = async () => {
@@ -55,6 +59,8 @@ export const App = () => {
                 name: 'executeGraphQl',
                 payload: { query: getAssetsByIds(context.selection.assets.ids) },
             });
+
+            console.log('response:', response);
 
             setAssets(response.assets);
         };
@@ -70,10 +76,6 @@ export const App = () => {
         });
         setMatchCount(totalMatchCount);
     }, [findText, assets]);
-
-    const renameAssets = () => {
-        console.log('about to rename...');
-    };
 
     return (
         <div className="tw-flex tw-flex-col tw-py-10 tw-px-10 tw-gap-y-6">
@@ -110,11 +112,11 @@ export const App = () => {
             </div>
             <div id="file-list">
                 {assetsAreFetched ? (
-                    assets.map((asset, index) => {
+                    assets.map((asset) => {
                         const { highlightedText } = highlightMatches(asset.title, findText);
 
                         return (
-                            <Stack direction="row" marginY={4} key={index}>
+                            <Stack direction="row" marginY={4} key={asset.id}>
                                 <Text size="medium">
                                     <span className="tw-text-text">{highlightedText}</span>
                                     <span className="tw-text-text-weak">.{asset.extension}</span>
@@ -124,7 +126,7 @@ export const App = () => {
                     })
                 ) : (
                     <Text size="large" as="em">
-                        Gathering filenames of selected assets ...
+                        Gathering names of selected assets ...
                     </Text>
                 )}
             </div>
