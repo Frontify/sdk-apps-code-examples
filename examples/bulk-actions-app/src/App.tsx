@@ -1,5 +1,5 @@
 import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getAssetsByIds, updateAssetTitle } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
 import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
@@ -10,9 +10,7 @@ const highlightMatches = (filename: string, query: string) => {
     }
 
     const parts = filename.split(new RegExp(`(${query})`, 'gi'));
-
     const matchCount = parts.filter((part) => part.toLowerCase() === query.toLowerCase()).length;
-
     const highlightedText = parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
             <span key={index} className="tw-bg-box-negative-strong">
@@ -26,18 +24,27 @@ const highlightMatches = (filename: string, query: string) => {
     return { highlightedText, matchCount };
 };
 
+const quantify = (noun: 'asset' | 'match', count: number) => {
+    const plurals = {
+        asset: 'assets',
+        match: 'matches',
+    };
+
+    return `${count} ${count === 1 ? noun : plurals[noun]}`;
+};
+
 const getResultCount = (matchCount: number, assetCount: number) => {
     if (matchCount === 0) {
         return 'No matches';
     }
 
-    return `${matchCount} match${matchCount === 1 ? '' : 'es'} in ${assetCount} asset${assetCount === 1 ? '' : 's'}`;
+    return `${quantify('match', matchCount)} in ${quantify('asset', assetCount)}`;
 };
 
 type Asset = { id: string; previewUrl: string; title: string; extension: string };
 
 export const App = () => {
-    const appBridge = new AppBridgePlatformApp();
+    const appBridge = useMemo(() => new AppBridgePlatformApp(), []);
     const context = appBridge.context().get();
 
     const [assets, setAssets] = useState<Asset[]>([]);
@@ -62,13 +69,12 @@ export const App = () => {
     };
 
     const renameAssets = async () => {
-        const count = matchingAssetCount;
         let index = 1;
 
         setRenamingInProgress(true);
 
         for (const asset of matchingAssets) {
-            setProgressMessage(`Renaming ${index} of ${count} asset${count === 1 ? '' : 's'}...`);
+            setProgressMessage(`Renaming ${index} of ${quantify('asset', matchingAssetCount)} ...`);
 
             const newTitle = asset.title.replace(new RegExp(findText, 'gi'), replaceText);
 
@@ -83,7 +89,7 @@ export const App = () => {
                 asset.title = response.updateAsset.asset.title;
                 index++;
             } catch (error) {
-                console.error('Error renaming asset:', asset.id, error);
+                console.error(`Error renaming asset ${asset.id} from ${asset.title} to ${newTitle}`, error);
             }
 
             setAssets(assets);
@@ -91,7 +97,7 @@ export const App = () => {
 
         setRenamingInProgress(false);
         setMatchCount(0);
-        setProgressMessage(`Finished renaming ${count} asset${count === 1 ? '' : 's'}`);
+        setProgressMessage(`Finished renaming ${quantify('asset', matchingAssetCount)}`);
     };
 
     useEffect(() => {
@@ -109,7 +115,7 @@ export const App = () => {
         };
 
         fetchAssets();
-    }, []);
+    }, [context.selection.assets.ids, appBridge, context.surface]);
 
     useEffect(() => {
         let totalMatchCount = 0;
