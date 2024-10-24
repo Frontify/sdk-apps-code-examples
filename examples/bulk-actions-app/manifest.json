@@ -1,0 +1,19 @@
+{
+    "appId": "<Your app ID>",
+    "appType": "platform-app",
+    "name": "template-platform-app-tailwind",
+    "metadata": {
+        "version": 1
+    },
+    "permissions": {
+        "scopes": ["basic:read", "basic:write"]
+    },
+    "surfaces": {
+        "mediaLibrary": {
+            "assetBulkActions": {
+                "title": "Bulk Rename Assets",
+                "filenameExtensions": ["png", "jpg"]
+            }
+        }
+    }
+}
