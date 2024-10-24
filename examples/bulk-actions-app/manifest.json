@@ -10,13 +10,9 @@
     },
     "surfaces": {
         "mediaLibrary": {
-            "assetAction": {
-                "title": "Asset Action",
-                "type": ["image"],
-                "filenameExtension": ["png", "jpeg"]
-            },
-            "assetCreation": {
-                "title": "Asset Creation"
+            "assetBulkActions": {
+                "title": "Bulk Rename Assets",
+                "filenameExtensions": ["png", "jpg"]
             }
         }
     }
