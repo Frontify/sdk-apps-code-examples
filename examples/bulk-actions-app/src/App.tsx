@@ -3,23 +3,28 @@ import { useEffect, useMemo, useState } from 'react';
 import { getAssetsByIds, updateAssetTitle } from './helpers/graphql';
 import { Button } from '@frontify/fondue/components';
 import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
+import { IconTypographyMultiple } from '@frontify/fondue/icons';
 
-const highlightMatches = (filename: string, query: string) => {
+const highlightMatches = (filename: string, query: string, matchCase: boolean) => {
     if (!query) {
         return { highlightedText: filename, matchCount: 0 };
     }
 
-    const parts = filename.split(new RegExp(`(${query})`, 'gi'));
-    const matchCount = parts.filter((part) => part.toLowerCase() === query.toLowerCase()).length;
-    const highlightedText = parts.map((part, index) =>
-        part.toLowerCase() === query.toLowerCase() ? (
-            <span key={index} className="tw-bg-box-negative-strong">
-                {part}
-            </span>
-        ) : (
-            part
-        ),
-    );
+    const parts = filename.split(new RegExp(`(${query})`, matchCase ? 'i' : 'gi'));
+    const matchCount = parts.filter((part) => {
+        return matchCase ? part === query : part.toLowerCase() === query.toLowerCase();
+    }).length;
+    const highlightedText = parts.map((part, index) => {
+        if (matchCase ? part === query : part.toLowerCase() === query.toLowerCase()) {
+            return (
+                <span key={index} className="tw-bg-box-negative-strong">
+                    {part}
+                </span>
+            );
+        }
+
+        return part;
+    });
 
     return { highlightedText, matchCount };
 };
@@ -54,6 +59,7 @@ export const App = () => {
     const [matchingAssets, setMatchingAssets] = useState<Asset[]>([]);
     const [renamingInProgress, setRenamingInProgress] = useState(false);
     const [progressMessage, setProgressMessage] = useState('');
+    const [matchCase, setMatchCase] = useState(false);
 
     const assetsAreFetched = assets.length > 0;
     const matchingAssetCount = matchingAssets.length;
@@ -122,7 +128,7 @@ export const App = () => {
         const matchedAssets: Asset[] = [];
 
         assets.forEach((asset) => {
-            const { matchCount } = highlightMatches(asset.title, findText);
+            const { matchCount } = highlightMatches(asset.title, findText, matchCase);
 
             if (matchCount > 0) {
                 matchedAssets.push(asset);
@@ -133,7 +139,7 @@ export const App = () => {
 
         setMatchCount(totalMatchCount);
         setMatchingAssets(matchedAssets);
-    }, [findText, assets]);
+    }, [findText, assets, matchCase]);
 
     return (
         <div className="tw-flex tw-flex-col tw-py-10 tw-px-10 tw-gap-y-6">
@@ -142,27 +148,44 @@ export const App = () => {
             </Heading>
             <div className="tw-flex tw-flex-col tw-gap-y-2">
                 <div className="tw-flex tw-items-center tw-gap-x-2">
-                    <TextInput
-                        id="find"
-                        placeholder="Find"
-                        disabled={!assetsAreFetched}
-                        value={findText}
-                        onChange={handleFindTextChange}
-                        onEnterPressed={() => {}}
-                        onBlur={() => {}}
-                    />
+                    <div className="tw-w-[200px]">
+                        <TextInput
+                            id="find"
+                            placeholder="Find"
+                            disabled={!assetsAreFetched}
+                            value={findText}
+                            onChange={handleFindTextChange}
+                            onEnterPressed={() => {}}
+                            onBlur={() => {}}
+                            extraActions={[
+                                {
+                                    icon: (
+                                        <IconTypographyMultiple size={16} color={`${matchCase ? 'black' : 'gray'}`} />
+                                    ),
+                                    onClick: () => setMatchCase(!matchCase),
+                                    title: 'Extra action A',
+                                    tooltip: {
+                                        content: `Match Case: ${matchCase ? 'on' : 'off'}`,
+                                        withArrow: true,
+                                    },
+                                },
+                            ]}
+                        />
+                    </div>
                     <Text>{getResultCount(matchCount, matchingAssetCount)}</Text>
                 </div>
                 <div className="tw-flex tw-gap-x-1 tw-items-center">
-                    <TextInput
-                        id="replace"
-                        placeholder="Replace"
-                        disabled={!assetsAreFetched}
-                        value={replaceText}
-                        onChange={handleReplaceTextChange}
-                        onEnterPressed={() => {}}
-                        onBlur={() => {}}
-                    />
+                    <div className="tw-w-[200px]">
+                        <TextInput
+                            id="replace"
+                            placeholder="Replace"
+                            disabled={!assetsAreFetched}
+                            value={replaceText}
+                            onChange={handleReplaceTextChange}
+                            onEnterPressed={() => {}}
+                            onBlur={() => {}}
+                        />
+                    </div>
                     <Button disabled={matchCount === 0 || renamingInProgress} onPress={renameAssets}>
                         Rename all
                     </Button>
@@ -174,7 +197,7 @@ export const App = () => {
             <div id="file-list">
                 {assetsAreFetched ? (
                     assets.map((asset) => {
-                        const { highlightedText } = highlightMatches(asset.title, findText);
+                        const { highlightedText } = highlightMatches(asset.title, findText, matchCase);
 
                         return (
                             <Stack direction="row" marginY={4} key={asset.id}>
