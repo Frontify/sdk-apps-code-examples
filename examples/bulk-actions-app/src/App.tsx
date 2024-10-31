@@ -1,7 +1,7 @@
 import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import { useEffect, useMemo, useState } from 'react';
 import { getAssetsByIds, updateAssetTitle } from './helpers/graphql';
-import { Button } from '@frontify/fondue/components';
+import { Button, ScrollArea } from '@frontify/fondue/components';
 import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
 import { IconTypographyMultiple } from '@frontify/fondue/icons';
 
@@ -14,10 +14,10 @@ const highlightMatches = (filename: string, query: string, matchCase: boolean) =
     const matchCount = parts.filter((part) => {
         return matchCase ? part === query : part.toLowerCase() === query.toLowerCase();
     }).length;
-    const highlightedText = parts.map((part, index) => {
+    const highlightedText = parts.map((part) => {
         if (matchCase ? part === query : part.toLowerCase() === query.toLowerCase()) {
             return (
-                <span key={index} className="tw-bg-box-negative-strong">
+                <span key={part} className="tw-bg-box-negative-strong">
                     {part}
                 </span>
             );
@@ -194,7 +194,7 @@ export const App = () => {
                     <Text size="small">{progressMessage}</Text>
                 </div>
             </div>
-            <div id="file-list">
+            <ScrollArea maxHeight="50vh" type="scroll">
                 {assetsAreFetched ? (
                     assets.map((asset) => {
                         const { highlightedText } = highlightMatches(asset.title, findText, matchCase);
@@ -213,7 +213,7 @@ export const App = () => {
                         Gathering names of selected assets ...
                     </Text>
                 )}
-            </div>
+            </ScrollArea>
         </div>
     );
 };
