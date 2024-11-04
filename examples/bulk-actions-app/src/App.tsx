@@ -46,6 +46,14 @@ const getResultCount = (matchCount: number, assetCount: number) => {
     return `${quantify('match', matchCount)} in ${quantify('asset', assetCount)}`;
 };
 
+const chunkArray = (array: string[], size: number) => {
+    const result = [];
+    for (let i = 0; i < array.length; i += size) {
+        result.push(array.slice(i, i + size));
+    }
+    return result;
+};
+
 type Asset = { id: string; previewUrl: string; title: string; extension: string };
 
 export const App = () => {
@@ -112,12 +120,20 @@ export const App = () => {
                 return;
             }
 
-            const response = await appBridge.api({
-                name: 'executeGraphQl',
-                payload: { query: getAssetsByIds(context.selection.assets.ids) },
-            });
+            const assetIds = context.selection.assets.ids;
+            const chunks = chunkArray(assetIds, 100);
+            const allAssets = [];
 
-            setAssets(response.assets);
+            for (const chunk of chunks) {
+                const response = await appBridge.api({
+                    name: 'executeGraphQl',
+                    payload: { query: getAssetsByIds(chunk) },
+                });
+
+                allAssets.push(...response.assets);
+            }
+
+            setAssets(allAssets);
         };
 
         fetchAssets();
