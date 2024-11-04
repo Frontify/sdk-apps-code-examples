@@ -11,13 +11,14 @@ const highlightMatches = (filename: string, query: string, matchCase: boolean) =
     }
 
     const parts = filename.split(new RegExp(`(${query})`, matchCase ? 'i' : 'gi'));
+    console.log('parts', parts);
     const matchCount = parts.filter((part) => {
         return matchCase ? part === query : part.toLowerCase() === query.toLowerCase();
     }).length;
-    const highlightedText = parts.map((part) => {
+    const highlightedText = parts.map((part, index) => {
         if (matchCase ? part === query : part.toLowerCase() === query.toLowerCase()) {
             return (
-                <span key={part} className="tw-bg-box-negative-strong">
+                <span key={index} className="tw-bg-box-negative-strong">
                     {part}
                 </span>
             );
