@@ -11,7 +11,6 @@ const highlightMatches = (filename: string, query: string, matchCase: boolean) =
     }
 
     const parts = filename.split(new RegExp(`(${query})`, matchCase ? 'i' : 'gi'));
-    console.log('parts', parts);
     const matchCount = parts.filter((part) => {
         return matchCase ? part === query : part.toLowerCase() === query.toLowerCase();
     }).length;
