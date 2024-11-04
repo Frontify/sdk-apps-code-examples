@@ -196,18 +196,20 @@ export const App = () => {
             </div>
             <ScrollArea maxHeight="50vh" type="scroll">
                 {assetsAreFetched ? (
-                    assets.map((asset) => {
-                        const { highlightedText } = highlightMatches(asset.title, findText, matchCase);
+                    <div className="tw-border tw-px-2">
+                        {assets.map((asset) => {
+                            const { highlightedText } = highlightMatches(asset.title, findText, matchCase);
 
-                        return (
-                            <Stack direction="row" marginY={4} key={asset.id}>
-                                <Text size="medium">
-                                    <span className="tw-text-text">{highlightedText}</span>
-                                    <span className="tw-text-text-weak">.{asset.extension}</span>
-                                </Text>
-                            </Stack>
-                        );
-                    })
+                            return (
+                                <Stack direction="row" marginY={4} key={asset.id}>
+                                    <Text size="medium">
+                                        <span className="tw-text-text">{highlightedText}</span>
+                                        <span className="tw-text-text-weak">.{asset.extension}</span>
+                                    </Text>
+                                </Stack>
+                            );
+                        })}
+                    </div>
                 ) : (
                     <Text size="large" as="em">
                         Gathering names of selected assets ...
