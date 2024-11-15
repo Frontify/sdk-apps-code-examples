@@ -1,9 +1,9 @@
 import { AppBridgePlatformApp } from '@frontify/app-bridge-app';
+import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
+import { Button, ScrollArea } from '@frontify/fondue/components';
+import { IconTypographyMultiple } from '@frontify/fondue/icons';
 import { useEffect, useMemo, useState } from 'react';
 import { getAssetsByIds, updateAssetTitle } from './helpers/graphql';
-import { Button, ScrollArea } from '@frontify/fondue/components';
-import { Heading, Stack, Text, TextInput } from '@frontify/fondue';
-import { IconTypographyMultiple } from '@frontify/fondue/icons';
 
 const highlightMatches = (filename: string, query: string, matchCase: boolean) => {
     if (!query) {
@@ -171,8 +171,8 @@ export const App = () => {
                             disabled={!assetsAreFetched}
                             value={findText}
                             onChange={handleFindTextChange}
-                            onEnterPressed={() => {}}
-                            onBlur={() => {}}
+                            onEnterPressed={() => { }}
+                            onBlur={() => { }}
                             extraActions={[
                                 {
                                     icon: (
@@ -198,8 +198,8 @@ export const App = () => {
                             disabled={!assetsAreFetched}
                             value={replaceText}
                             onChange={handleReplaceTextChange}
-                            onEnterPressed={() => {}}
-                            onBlur={() => {}}
+                            onEnterPressed={() => { }}
+                            onBlur={() => { }}
                         />
                     </div>
                     <Button disabled={matchCount === 0 || renamingInProgress} onPress={renameAssets}>
@@ -210,14 +210,14 @@ export const App = () => {
                     <Text size="small">{progressMessage}</Text>
                 </div>
             </div>
-            <ScrollArea maxHeight="50vh" type="scroll">
+            <ScrollArea maxHeight="50vh" maxWidth="66%" type="scroll">
                 {assetsAreFetched ? (
-                    <div className="tw-border tw-px-2">
+                    <div className="tw-border tw-px-2 tw-rounded">
                         {assets.map((asset) => {
                             const { highlightedText } = highlightMatches(asset.title, findText, matchCase);
 
                             return (
-                                <Stack direction="row" marginY={4} key={asset.id}>
+                                <Stack direction="row" marginY={4} padding={4} key={asset.id}>
                                     <Text size="medium">
                                         <span className="tw-text-text">{highlightedText}</span>
                                         <span className="tw-text-text-weak">.{asset.extension}</span>
