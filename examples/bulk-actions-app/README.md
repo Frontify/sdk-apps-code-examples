@@ -1,6 +1,5 @@
 # Hello World
-This is a simple example of a Hello World app using React and Tailwind.
-
+This is a basic example of an App using the Bulk actions Surface.
 ## Information
 
 This app is the basic example to get you started with our platform. Even though it's simple, it comes pre-configured with our platform fonts, design system components, and styles. This ensures that you have a consistent look and feel across the application, adhering to our design standards right from the start.
