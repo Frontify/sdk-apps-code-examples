@@ -9,14 +9,11 @@
         "scopes": ["basic:read", "basic:write"]
     },
     "surfaces": {
-        "mediaLibrary": {
-            "assetAction": {
-                "title": "Asset Action",
+        "guideline": {
+            "assetViewer": {
+                "title": "Social Media Hub",
                 "type": ["image"],
-                "filenameExtension": ["png", "jpeg"]
-            },
-            "assetCreation": {
-                "title": "Asset Creation"
+                "filenameExtension": ["jpeg", "jpg"]
             }
         }
     }
