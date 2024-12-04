@@ -24,13 +24,13 @@ export const App = () => {
 
             const credentials = await getLoggedInUser();
             if (credentials) {
-                setLoggedIn(true)
                 appBridge.state("userState").set({
                     accessJwt: credentials.accessJwt,
                     refreshJwt: credentials.refreshJwt,
                     handle: credentials.handle,
                     did: credentials.did
                 })
+                setLoggedIn(true)
             }
             setInitializing(false)
         }

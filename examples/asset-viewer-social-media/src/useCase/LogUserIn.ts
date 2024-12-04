@@ -23,7 +23,7 @@ export const getLoggedInUser = async () => {
     if (userState && userState.accessJwt) {
         const { success, agent, data } = await refreshAccessToken(userState);
         if (success) {
-            return { agent, accessJwt: data.accessJwt, refreshJwt: data.refreshJwt, handle: data.handle, did: data.did }
+            return { agent, accessJwt: userState.accessJwt, refreshJwt: userState.refreshJwt, handle: data.handle, did: data.did }
         } else {
             return null
         }
