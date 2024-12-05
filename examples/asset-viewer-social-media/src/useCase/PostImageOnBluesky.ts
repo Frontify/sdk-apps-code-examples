@@ -1,5 +1,5 @@
 import { AppBridgePlatformApp } from "@frontify/app-bridge-app";
-import { getLoggedInUser } from "./LogUserIn";
+import { getUserCredentials } from "./LogUserIn";
 
 
 const getBlobFromUrl = async (url: string) => {
@@ -30,7 +30,7 @@ const getCurrentImageAsBlob = async () => {
 export const createPostWithImage = async (text: string) => {
 
     const { blob, title } = await getCurrentImageAsBlob()
-    const credentials = await getLoggedInUser();
+    const credentials = await getUserCredentials();
     if (credentials) {
         const { data } = await credentials.agent.uploadBlob(blob)
 
