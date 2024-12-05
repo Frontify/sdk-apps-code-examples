@@ -30,6 +30,7 @@ export const createPostWithImage = async (text: string) => {
 
     const { blob, title } = await getCurrentImageAsBlob()
     const credentials = await getUserCredentials();
+
     if (credentials) {
         const { data } = await credentials.agent.uploadBlob(blob)
 

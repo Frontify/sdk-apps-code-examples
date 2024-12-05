@@ -24,7 +24,7 @@ export const Login = ({ onLoginSuccess }: BlueskyLoginProps) => {
         setIsLoading(true)
         const success = await onLoginSuccess(credentials.identifier, credentials.password);
         if (!success) {
-            setError("Credentials did not match")
+            setError("Username or Password is wrong!")
             setCredentials({ identifier: '', password: '' })
             setIsLoading(false)
         }
