@@ -24,7 +24,6 @@ export const App = () => {
     return (
         <div className="flex h-[100vh] bg-zinc-500 justify-center items-center">
             <div className="flex flex-col rounded-xl bg-[#161e27]">
-
                 <Router init={init} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             </div>
         </div>
