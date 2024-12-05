@@ -15,8 +15,7 @@ export const authorizeUser = async ({ identifier, password }: { identifier: stri
         })
         appBridge.state("userState").set({ accessJwt: data.accessJwt, refreshJwt: data.refreshJwt, handle: data.handle, did: data.did })
         return true
-    } catch (err) {
-        console.log(err)
+    } catch {
         return false
     }
 
@@ -27,6 +26,7 @@ export const getUserCredentials = async () => {
 
     const appBridge = new AppBridgePlatformApp();
     const userState = appBridge.state("userState").get();
+
     if (userState && userState.accessJwt) {
         const { success, agent, data } = await refreshAccessToken(userState);
         if (success) {
@@ -36,13 +36,15 @@ export const getUserCredentials = async () => {
                 handle: data.handle,
                 did: data.did
             })
-            return { agent, accessJwt: userState.accessJwt, refreshJwt: userState.refreshJwt, handle: data.handle, did: data.did }
-        } else {
-            return null
+
+            return { agent }
         }
-    } else {
+
         return null
     }
+
+    return null
+
 }
 
 const refreshAccessToken = async ({ accessJwt, refreshJwt, handle, did }: { refreshJwt: string, handle: string, did: string, accessJwt: string }) => {
@@ -51,6 +53,7 @@ const refreshAccessToken = async ({ accessJwt, refreshJwt, handle, did }: { refr
         service: 'https://bsky.social'
     })
     const { success, data } = await agent.resumeSession({ accessJwt, refreshJwt, handle, did, active: true })
+
     return { success, agent, data }
 }
 
