@@ -13,7 +13,7 @@
             "assetViewer": {
                 "title": "Social Media Hub",
                 "type": ["image"],
-                "filenameExtension": ["jpeg", "jpg"]
+                "filenameExtension": ["jpeg", "jpg", "png", "svg"]
             }
         }
     }
