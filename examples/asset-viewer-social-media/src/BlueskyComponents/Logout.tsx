@@ -39,9 +39,7 @@ export const Logout = ({ onLogout }: { onLogout: () => void }) => {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
                     <div className="bg-black border border-gray-800 rounded-xl p-6 max-w-sm w-full">
                         <h3 className="text-xl font-bold text-white mb-2">Log out of the Bluesky App?</h3>
-                        <p className="text-gray-400 mb-6">
-                            You can always log back in at any time.
-                        </p>
+                        <p className="text-gray-400 mb-6">You can always log back in at any time.</p>
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setShowConfirm(false)}
@@ -63,4 +61,3 @@ export const Logout = ({ onLogout }: { onLogout: () => void }) => {
         </div>
     );
 };
-
