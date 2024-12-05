@@ -9,6 +9,7 @@ Welcome to the Brand SDK Apps Code Samples repository! Here, you'll find a serie
 -   [**App with user state example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-with-state){:target="_blank"}: A sample app that demonstrates how to use the userState.
 -   [**App Settings Example**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/app-settings){:target="_blank"}: A simple example of a Hello World app using `settings.ts` to customize app behavior.
 -   [**Bulk Action Surface**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/bulk-actions-app){:target="_blank"}: An App that shows how the Bulk Actions Surface can be used.
+-   [**Asset Viewer Surface Media Sharing**](https://github.com/Frontify/sdk-apps-code-examples/tree/main/examples/asset-viewer-social-media){:target="_blank"}: An App that shows how to share images throuh the Asset Viewer Surface.
 
 Each example is accompanied by detailed documentation and comments within the code to help you understand how to utilize our SDK effectively. Whether you're just getting started or looking to implement specific features, these samples will guide you through the process.
 
