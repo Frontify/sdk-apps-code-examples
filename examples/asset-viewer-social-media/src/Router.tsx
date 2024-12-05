@@ -4,7 +4,7 @@ import { InputMask } from "./BlueskyComponents/InputMask.tsx";
 import { Login } from "./BlueskyComponents/Login.tsx";
 import { Logout } from "./BlueskyComponents/Logout.tsx";
 import { PostConfirmation } from "./BlueskyComponents/PostConfirmation.tsx";
-import { AuthorizeUser, logoutUser } from "./useCase/Authentication.ts";
+import { authorizeUser, logoutUser } from "./useCase/Authentication.ts";
 import { createPostWithImage } from "./useCase/CreatePostWithImage.ts";
 
 export const Router = ({ init, loggedIn, setLoggedIn }: {
@@ -31,18 +31,18 @@ export const Router = ({ init, loggedIn, setLoggedIn }: {
         initializeImage()
     }, [])
 
-    const loginUser = async (identifier: string, password: string) => {
-        await AuthorizeUser({ identifier, password });
-    }
-
     if (init) {
         return <div className="flex flex-col rounded-xl bg-[#161e27]"></div>
     }
 
     if (!loggedIn) {
-        return <Login onLoginSuccess={(identifier, password) => {
-            loginUser(identifier, password)
-            setLoggedIn(true);
+        return <Login onLoginSuccess={async (identifier, password) => {
+            const success = await authorizeUser({ identifier, password });
+            if (success) {
+                setLoggedIn(true);
+            }
+
+            return success
         }} />
     }
 

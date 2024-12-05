@@ -1,19 +1,25 @@
 import AtpAgent from "@atproto/api";
 import { AppBridgePlatformApp } from "@frontify/app-bridge-app";
 
-export const AuthorizeUser = async ({ identifier, password }: { identifier: string, password: string }) => {
+export const authorizeUser = async ({ identifier, password }: { identifier: string, password: string }) => {
 
     const appBridge = new AppBridgePlatformApp();
     const agent = new AtpAgent({
         service: 'https://bsky.social'
     })
 
-    const { data } = await agent.login({
-        identifier: identifier,
-        password: password
-    })
+    try {
+        const { data } = await agent.login({
+            identifier: identifier,
+            password: password
+        })
+        appBridge.state("userState").set({ accessJwt: data.accessJwt, refreshJwt: data.refreshJwt, handle: data.handle, did: data.did })
+        return true
+    } catch (err) {
+        console.log(err)
+        return false
+    }
 
-    appBridge.state("userState").set({ accessJwt: data.accessJwt, refreshJwt: data.refreshJwt, handle: data.handle, did: data.did })
 }
 
 

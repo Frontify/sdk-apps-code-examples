@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 type BlueskyLoginProps = {
-    onLoginSuccess: (identifier: string, password: string) => void;
+    onLoginSuccess: (identifier: string, password: string) => Promise<boolean>;
 }
 export const Login = ({ onLoginSuccess }: BlueskyLoginProps) => {
     const [credentials, setCredentials] = useState({
@@ -19,9 +19,15 @@ export const Login = ({ onLoginSuccess }: BlueskyLoginProps) => {
         setError('');
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         setIsLoading(true)
-        onLoginSuccess(credentials.identifier, credentials.password);
+        const success = await onLoginSuccess(credentials.identifier, credentials.password);
+        if (!success) {
+            setError("Credentials did not match")
+            setCredentials({ identifier: '', password: '' })
+            setIsLoading(false)
+        }
     }
 
     return (
