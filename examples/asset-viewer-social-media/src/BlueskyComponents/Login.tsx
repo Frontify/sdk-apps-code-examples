@@ -3,7 +3,7 @@ import { useState } from "react";
 type BlueskyLoginProps = {
     onLoginSuccess: (identifier: string, password: string) => void;
 }
-export const BlueskyLogin = ({ onLoginSuccess }: BlueskyLoginProps) => {
+export const Login = ({ onLoginSuccess }: BlueskyLoginProps) => {
     const [credentials, setCredentials] = useState({
         identifier: '',
         password: ''

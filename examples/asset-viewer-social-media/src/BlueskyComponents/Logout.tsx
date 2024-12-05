@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const LogoutButton = ({ onLogout }: { onLogout: () => void }) => {
+export const Logout = ({ onLogout }: { onLogout: () => void }) => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 

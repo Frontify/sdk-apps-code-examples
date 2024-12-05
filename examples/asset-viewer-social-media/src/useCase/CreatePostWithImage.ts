@@ -1,5 +1,5 @@
 import { AppBridgePlatformApp } from "@frontify/app-bridge-app";
-import { getUserCredentials } from "./LogUserIn";
+import { getUserCredentials } from "./Authentication.ts";
 
 
 const getBlobFromUrl = async (url: string) => {
@@ -8,7 +8,6 @@ const getBlobFromUrl = async (url: string) => {
 }
 
 const getCurrentImageAsBlob = async () => {
-
     const appBridge = new AppBridgePlatformApp();
     const context = appBridge.context().get();
 

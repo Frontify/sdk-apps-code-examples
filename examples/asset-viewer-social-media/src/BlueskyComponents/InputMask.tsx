@@ -6,7 +6,7 @@ type BlueSkyInputMaskProps = {
     onSubmit: (input: string) => void
 }
 
-export const BlueSkyInputMask = ({ imageSrc, onSubmit }: BlueSkyInputMaskProps) => {
+export const InputMask = ({ imageSrc, onSubmit }: BlueSkyInputMaskProps) => {
 
     const [post, setPost] = useState('');
     const [charCount, setCharCount] = useState(300);
