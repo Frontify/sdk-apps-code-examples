@@ -9,18 +9,21 @@ import { createPostWithImage } from './useCase/PostImageOnBluesky';
 
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
-    const context = appBridge.context().get();
     const [image, setImage] = useState<string | undefined>();
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [initializing, setInitializing] = useState(true);
 
-    if (context.surface === "assetViewer") {
-        appBridge.api({ "name": "getAssetResourceInformation", payload: { assetId: context.assetId } }).then((response) => setImage(response.previewUrl))
-    }
 
     useEffect(() => {
         const setInitialLoggedStatus = async () => {
+
+            const context = appBridge.context().get();
+            if (context.surface === "assetViewer") {
+                const assetResource = await appBridge.api({ "name": "getAssetResourceInformation", payload: { assetId: context.assetId } })
+                setImage(assetResource.previewUrl)
+            }
+
 
             const credentials = await getLoggedInUser();
             if (credentials) {
@@ -46,15 +49,18 @@ export const App = () => {
         if (initializing) {
             return <div className="flex flex-col rounded-xl bg-[#161e27]"></div>
         }
+
         if (!loggedIn) {
             return <BlueskyLogin onLoginSuccess={(identifier, password) => {
                 setUserLoggedState(identifier, password)
                 setLoggedIn(true);
             }} />
         }
+
         if (showConfirmation) {
             return <PostConfirmation onClose={() => setShowConfirmation(false)} />
         }
+
         return <div className="flex flex-col rounded-xl bg-[#161e27]">
             <BlueSkyInputMask imageSrc={image + "?mod=v1/resize=400"} onSubmit={(input) => {
                 setShowConfirmation(true);
