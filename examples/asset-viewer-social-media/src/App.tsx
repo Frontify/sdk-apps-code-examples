@@ -37,33 +37,39 @@ export const App = () => {
         setInitialLoggedStatus();
     }, [])
 
-    const doLogin = async (identifier: string, password: string) => {
+    const setUserLoggedState = async (identifier: string, password: string) => {
         const { accessJwt, refreshJwt, handle, did } = await setUserLoggedIn({ identifier, password });
         appBridge.state("userState").set({ accessJwt: accessJwt, refreshJwt, handle, did })
     }
 
+    const Router = () => {
+        if (initializing) {
+            return <div className="flex flex-col rounded-xl bg-[#161e27]"></div>
+        }
+        if (!loggedIn) {
+            return <BlueskyLogin onLoginSuccess={(identifier, password) => {
+                setUserLoggedState(identifier, password)
+                setLoggedIn(true);
+            }} />
+        }
+        if (showConfirmation) {
+            return <PostConfirmation onClose={() => setShowConfirmation(false)} />
+        }
+        return <div className="flex flex-col rounded-xl bg-[#161e27]">
+            <BlueSkyInputMask imageSrc={image + "?mod=v1/resize=400"} onSubmit={(input) => {
+                setShowConfirmation(true);
+                createPostWithImage(input);
+            }} />
+            <LogoutButton onLogout={() => {
+                appBridge.state("userState").set({ identifier: "", password: "" })
+                setLoggedIn(false)
+            }} />
+        </div>
+    }
+
     return (
         <div className="flex h-[100vh] bg-zinc-500 justify-center items-center">
-            {!initializing ?
-                loggedIn ?
-                    showConfirmation ? <PostConfirmation onClose={() => setShowConfirmation(false)} /> :
-                        <div className="flex flex-col rounded-xl bg-[#161e27]">
-                            <BlueSkyInputMask imageSrc={image + "?mod=v1/resize=400"} onSubmit={(input) => {
-                                setShowConfirmation(true);
-                                createPostWithImage(input);
-                            }} />
-                            <LogoutButton onLogout={() => {
-                                appBridge.state("userState").set({ identifier: "", password: "" })
-                                setLoggedIn(false)
-                            }} />
-                        </div>
-                    :
-                    <BlueskyLogin onLoginSuccess={(identifier, password) => {
-                        doLogin(identifier, password)
-                        setLoggedIn(true);
-                    }} />
-                :
-                <div className="flex flex-col rounded-xl bg-[#161e27]"></div>}
+            <Router />
         </div>
     );
 };
