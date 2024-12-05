@@ -10,13 +10,14 @@ import { createPostWithImage } from './useCase/PostImageOnBluesky';
 export const App = () => {
     const appBridge = new AppBridgePlatformApp();
     const [image, setImage] = useState<string | undefined>();
-    const [showConfirmation, setShowConfirmation] = useState(false);
+
+
     const [loggedIn, setLoggedIn] = useState(false);
     const [initializing, setInitializing] = useState(true);
 
 
     useEffect(() => {
-        const setInitialLoggedStatus = async () => {
+        const initializeAppWithCredentials = async () => {
 
             const context = appBridge.context().get();
             if (context.surface === "assetViewer") {
@@ -37,7 +38,7 @@ export const App = () => {
             }
             setInitializing(false)
         }
-        setInitialLoggedStatus();
+        initializeAppWithCredentials();
     }, [])
 
     const setUserLoggedState = async (identifier: string, password: string) => {
@@ -46,6 +47,8 @@ export const App = () => {
     }
 
     const Router = () => {
+        const [showConfirmation, setShowConfirmation] = useState(false);
+
         if (initializing) {
             return <div className="flex flex-col rounded-xl bg-[#161e27]"></div>
         }
