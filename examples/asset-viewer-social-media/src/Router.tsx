@@ -50,7 +50,7 @@ export const Router = ({ init, loggedIn, setLoggedIn }: {
         return <PostConfirmation onClose={() => setShowConfirmation(false)} />
     }
 
-    return <div className="flex flex-col rounded-xl bg-[#161e27]">
+    return <>
         <InputMask imageSrc={image + "?mod=v1/resize=400"} onSubmit={(input) => {
             setShowConfirmation(true);
             createPostWithImage(input);
@@ -59,5 +59,5 @@ export const Router = ({ init, loggedIn, setLoggedIn }: {
             logoutUser();
             setLoggedIn(false)
         }} />
-    </div>
+    </>
 }
