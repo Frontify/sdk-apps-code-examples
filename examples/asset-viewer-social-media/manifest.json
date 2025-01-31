@@ -11,7 +11,7 @@
     "surfaces": {
         "guideline": {
             "assetViewer": {
-                "title": "Social Media Hub",
+                "title": "Publish to Bluesky",
                 "type": ["image"],
                 "filenameExtension": ["jpeg", "jpg", "png", "svg"]
             }
